@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Mental Health Predictor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>How is this student doing?</h1>
+    <p>Enter a student's daily habits and social media use. The trained model estimates a mental health score.</p>
+  </header>
+
+  <div class="grid">
+    <form class="panel" id="form" novalidate>
+      <fieldset>
+        <legend>About the student</legend>
+        <div class="row">
+          <div class="field" data-f="age">
+            <label for="age">Age <span class="hint">10 to 100</span></label>
+            <input id="age" type="number" min="10" max="100" step="1" placeholder="21" required>
+            <span class="err"></span>
+          </div>
+          <div class="field" data-f="country">
+            <label for="country">Country</label>
+            <input id="country" list="countries" placeholder="e.g. India" required>
+            <datalist id="countries">
+              <option>India</option><option>USA</option><option>Canada</option><option>Australia</option>
+              <option>UK</option><option>Germany</option><option>Mexico</option><option>Turkey</option>
+              <option>France</option><option>Pakistan</option><option>Other</option>
+            </datalist>
+            <span class="err"></span>
+          </div>
+          <div class="field" data-f="gender">
+            <label>Gender</label>
+            <div class="seg" role="radiogroup" aria-label="Gender">
+              <input type="radio" name="gender" id="g1" value="Male"><label for="g1">Male</label>
+              <input type="radio" name="gender" id="g2" value="Female"><label for="g2">Female</label>
+            </div>
+            <span class="err"></span>
+          </div>
+          <div class="field" data-f="academic_level">
+            <label for="academic_level">Academic level</label>
+            <select id="academic_level" required>
+              <option value="">Select level</option>
+              <option>High School</option><option>Undergraduate</option><option>Graduate</option>
+            </select>
+            <span class="err"></span>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Social media use</legend>
+        <div class="row">
+          <div class="field" data-f="most_used_platform">
+            <label for="most_used_platform">Most used platform</label>
+            <select id="most_used_platform" required>
+              <option value="">Select platform</option>
+              <option>Facebook</option><option>Instagram</option><option>TikTok</option><option>YouTube</option>
+              <option>Snapchat</option><option>Twitter</option><option>LinkedIn</option><option>WhatsApp</option>
+              <option>WeChat</option><option>LINE</option><option>KakaoTalk</option><option>VKontakte</option>
+            </select>
+            <span class="err"></span>
+          </div>
+          <div class="field" data-f="purpose_of_use">
+            <label for="purpose_of_use">Main purpose</label>
+            <select id="purpose_of_use" required>
+              <option value="">Select purpose</option>
+              <option>Entertainment</option><option>Education</option><option>Networking</option><option>News</option>
+            </select>
+            <span class="err"></span>
+          </div>
+          <div class="field" data-f="avg_daily_usage_hours">
+            <label for="avg_daily_usage_hours">Daily usage <span class="hint">hours, 0 to 24</span></label>
+            <input id="avg_daily_usage_hours" type="number" min="0" max="24" step="0.1" placeholder="4.5" required>
+            <span class="err"></span>
+          </div>
+          <div class="field" data-f="daily_unlocks">
+            <label for="daily_unlocks">Phone unlocks per day</label>
+            <input id="daily_unlocks" type="number" min="0" step="1" placeholder="60" required>
+            <span class="err"></span>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Daily routine</legend>
+        <div class="row">
+          <div class="field" data-f="study_hours">
+            <label for="study_hours">Study hours <span class="hint">0 to 24</span></label>
+            <input id="study_hours" type="number" min="0" max="24" step="0.1" placeholder="3" required>
+            <span class="err"></span>
+          </div>
+          <div class="field" data-f="sleep_hours_per_night">
+            <label for="sleep_hours_per_night">Sleep per night <span class="hint">hours, 0 to 24</span></label>
+            <input id="sleep_hours_per_night" type="number" min="0" max="24" step="0.1" placeholder="7" required>
+            <span class="err"></span>
+          </div>
+          <div class="field" data-f="physical_activity_hours">
+            <label for="physical_activity_hours">Physical activity <span class="hint">hours, 0 to 4</span></label>
+            <input id="physical_activity_hours" type="number" min="0" max="4" step="0.1" placeholder="1" required>
+            <span class="err"></span>
+          </div>
+          <div class="field" data-f="stress_level">
+            <label>Stress level</label>
+            <div class="seg stress" role="radiogroup" aria-label="Stress level">
+              <input type="radio" name="stress_level" id="s1" value="Low"><label for="s1" data-s="Low">Low</label>
+              <input type="radio" name="stress_level" id="s2" value="Medium"><label for="s2" data-s="Medium">Medium</label>
+              <input type="radio" name="stress_level" id="s3" value="High"><label for="s3" data-s="High">High</label>
+              <input type="radio" name="stress_level" id="s4" value="Very High"><label for="s4" data-s="Very High">Very High</label>
+            </div>
+            <span class="err"></span>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button class="primary" type="submit" id="submit">Predict score</button>
+        <button class="ghost" type="button" id="sample">Fill sample data</button>
+        <button class="ghost" type="reset" id="reset">Clear</button>
+      </div>
+
+      <div class="api">
+        <span><span class="dot" id="dot"></span> API</span>
+        <input id="apiUrl" value="http://127.0.0.1:8000" aria-label="API base URL" spellcheck="false">
+      </div>
+    </form>
+
+    <aside class="panel aside" aria-live="polite" id="out">
+      <div class="empty"><b>No prediction yet</b>Fill in the form and select Predict score. The result appears here.</div>
+    </aside>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
